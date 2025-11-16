@@ -1,14 +1,6 @@
 path: data
 train: train/images
 val: validation/images
-nc: 9
+nc: 1
 names:
-- Andrea Lopez
-- Anyi Becerra
-- Cristhian Tapiero
-- Daniela Fierro
-- "Diego Pati\xC3\xB1o"
-- Johel Arias
-- Marcela Cifuentes
-- Mauricio Alonso
-- "Pablo Carre\xC3\xB1o"
+- person

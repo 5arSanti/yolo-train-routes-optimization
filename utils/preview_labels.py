@@ -51,11 +51,11 @@ def draw_bboxes(images_path, labels_path, output_path, max_images=200):
 
     print(f"✔ Previews generados en: {output_path}")
 
-def preview_labels():
-    train_images_path = os.path.join("data", "train", "images")
-    train_labels_path = os.path.join("data", "train", "labels")
-    validation_images_path = os.path.join("data", "validation", "images")
-    validation_labels_path = os.path.join("data", "validation", "labels")
+def preview_labels(data_path):
+    train_images_path = os.path.join(data_path, "train", "images")
+    train_labels_path = os.path.join(data_path, "train", "labels")
+    validation_images_path = os.path.join(data_path, "validation", "images")
+    validation_labels_path = os.path.join(data_path, "validation", "labels")
     
     draw_bboxes(train_images_path, train_labels_path, "previews/preview_train")
 

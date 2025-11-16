@@ -1,4 +1,4 @@
-path: data
+path: data_preprocessed
 train: train/images
 val: validation/images
 nc: 1

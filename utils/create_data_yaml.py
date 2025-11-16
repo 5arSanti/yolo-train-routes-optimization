@@ -18,7 +18,7 @@ def create_data_yaml(path_to_classes_txt, path_to_data_yaml):
     number_of_classes = len(classes)
 
     data = {
-        "path": "data",
+        "path": "data_preprocessed",
         "train": "train/images",
         "val": "validation/images",
         "nc": number_of_classes,
@@ -76,7 +76,7 @@ def create_data_yaml_from_set_and_classes(
         return None
 
     data = {
-        "path": "data",
+        "path": "data_preprocessed",
         "train": "train/images",
         "val": "validation/images",
         "nc": len(final_names),

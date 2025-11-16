@@ -7,11 +7,18 @@ def apply_white_balance(img):
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     L, A, B = cv2.split(lab)
 
+    A = A.astype(np.float32)
+    B = B.astype(np.float32)
+
     A = A - np.mean(A) + 128
     B = B - np.mean(B) + 128
 
+    A = np.clip(A, 0, 255).astype(np.uint8)
+    B = np.clip(B, 0, 255).astype(np.uint8)
+
     lab_balanced = cv2.merge([L, A, B])
     return cv2.cvtColor(lab_balanced, cv2.COLOR_LAB2BGR)
+
 
 def apply_clahe(img):
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
@@ -58,8 +65,8 @@ def preprocess_image(img_path, output_path, size=512):
 def copy_label(label_path, output_path):
     shutil.copy(label_path, output_path)
 
-def process_dataset(src_root="data", dst_root="data_preprocessed", size=512):
-    splits = ["train", "validation"]
+def process_dataset(src_root, dst_root, size=512):
+    splits = ["train", "validation", "test"]
 
     for split in splits:
         print(f"🔧 Procesando {split}…")
@@ -85,7 +92,7 @@ def process_dataset(src_root="data", dst_root="data_preprocessed", size=512):
 
     print("🎉 Dataset preprocesado creado en:", dst_root)
 
-def data_preprocess(datap_path="data"):
+def data_preprocess(datap_path):
     process_dataset(
         src_root="data",
         dst_root=datap_path,

@@ -33,7 +33,7 @@ def clean_corrupt_labels(labels_path, images_path):
                     if not (0 <= x <= 1 and 0 <= y <= 1 and 0 <= w <= 1 and 0 <= h <= 1):
                         valid = False
                         break
-                except:
+                except ValueError:
                     valid = False
                     break
         
@@ -54,7 +54,7 @@ def clean_corrupt_images(images_path, labels_path):
     for img_path in Path(images_path).glob("*.*"):
         try:
             Image.open(img_path).verify()
-        except:
+        except Exception:
             print(f"Imagen dañada eliminada: {img_path}")
             label = Path(labels_path) / (img_path.stem + ".txt")
             if label.exists():

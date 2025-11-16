@@ -109,6 +109,10 @@ def append_custom_data(custom_root: str, dst_root: str, train_pct: float = 0.8, 
   src_images_dir = os.path.join(custom_root, 'images')
   src_labels_dir = os.path.join(custom_root, 'labels')
 
+  # Verificar que el directorio de imágenes existe antes de procesar
+  if not os.path.isdir(src_images_dir):
+    return
+
   dst_train_images = os.path.join(dst_root, 'train', 'images')
   dst_train_labels = os.path.join(dst_root, 'train', 'labels')
   dst_val_images = os.path.join(dst_root, 'validation', 'images')
@@ -155,11 +159,11 @@ def read_classes_txt(path_to_classes_txt: str) -> list[str]:
 
 
 def main():
-  parser = argparse.ArgumentParser(description='Unzip set.zip, merge with custom_data, and prepare data/ folders.')
-  parser.add_argument('--set_dir', default='dataset/set', help='Directory where set contents live or will be extracted')
-  parser.add_argument('--custom_dir', default='dataset/custom_data', help='Directory with images/ and labels/')
+  parser = argparse.ArgumentParser(description='Merge set and/or custom_data, and prepare data/ folders. Both set and custom_data are optional.')
+  parser.add_argument('--set_dir', default='dataset/set', help='Directory where set contents live or will be extracted (optional)')
+  parser.add_argument('--custom_dir', default='dataset/custom_data', help='Directory with images/ and labels/ (optional)')
   parser.add_argument('--data_dir', default='data', help='Target data root (data/train, data/validation, data/test)')
-  parser.add_argument('--classes_txt', default='dataset/custom_data/classes.txt', help='Path to classes.txt of custom_data')
+  parser.add_argument('--classes_txt', default='dataset/custom_data/classes.txt', help='Path to classes.txt of custom_data (optional)')
   parser.add_argument('--train_pct', default=0.8, type=float, help='Train percentage for custom_data split')
   parser.add_argument('--include_test', action='store_true', help='Copy set/test into data/test as well')
 
@@ -167,7 +171,8 @@ def main():
 
   set_yaml_path = os.path.join(args.set_dir, 'data.yaml')
   set_names = read_set_names(set_yaml_path)
-  custom_names = read_classes_txt(args.classes_txt)
+  # Solo leer classes.txt si custom_dir existe
+  custom_names = read_classes_txt(args.classes_txt) if os.path.isdir(args.custom_dir) else []
 
   final_names: list[str] = []
   seen = set()

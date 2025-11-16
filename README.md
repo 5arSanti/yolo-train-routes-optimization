@@ -18,12 +18,12 @@ conda update conda
 
 
 Crear enviroment para el modelo
-conda create --name fede-model-env1 python=3.13
+conda create --name train-model-env1 python=3.13
 
 
 
 Activar el enviroment
-conda activate fede-model-env1
+conda activate train-model-env1
 
 Desactivar el enviroment
 conda deactivate
@@ -51,7 +51,7 @@ sudo docker run -d --name label-studio \
 
 
 Instalar dependencias dentro del enviroment
-conda activate fede-model-env1
+conda activate train-model-env1
 pip install ipykernel
 pip install ultralytics
 
@@ -67,5 +67,5 @@ Utilizar modelo
 
 (Abrir terminal de Conda (Windows))
 conda init powershell
-conda activate fede-model-env1
+conda activate train-model-env1
 python utils/yolo_detect.py --model my_model/my_model.pt --source usb0 --resolution 1280x720
